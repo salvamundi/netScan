@@ -1,5 +1,9 @@
 #!/usr/bin/python3
-import scapy.all as scapy
+
+import scan
+import handle_args as ha
 
 if __name__ == '__main__':
-    pass
+    options = ha.handle_args() # values from -m & -t arguments
+
+    scan.scan(options.method, options.target)
