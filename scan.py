@@ -2,11 +2,28 @@ import scapy.all as scapy
 import handle_args as ha
 
 def scan(method, target):
-
+    packet = None
     if method == "ARP":
         request = scapy.ARP(pdst = target)  # x.x.x.x
         broadcast = scapy.Ether(dst = "ff:ff:ff:ff:ff:ff")  # send to broadcast in order to send packet to each client
         packet = broadcast/request
+
+    elif method == "ICMP":
+        print("ICMP")
+        exit()
+
+    elif method == "TCP":
+        print("TCP")
+        exit()
+
+    elif method == "UDP":
+        print("UDP")
+        exit()
+
+    else:
+        print("[!] Given method not available")
+        print("[*] Shutting down...")
+        exit()
 
     answered = scapy.srp(packet, timeout = 1, verbose = 0)[0]
 
@@ -31,6 +48,6 @@ def show_hosts():
 
     for host in hosts:
         print(f"{host['ip']}\t{host['mac']}")
-        print("---")
+        print("---\t\t---")
 
     print("----------------------------------")

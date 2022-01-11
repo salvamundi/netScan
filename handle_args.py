@@ -10,6 +10,10 @@ def handle_args():
     if options.method is None:
         options.method = "ARP"
 
+    if options.method == "help":
+        print("Select network communication protocol. Available: ARP(default), ICMP, TCP, UDP")
+        exit()
+
     if options.target is None:
         print("[!] No target specified")
         print("[*] Shutting down...")
