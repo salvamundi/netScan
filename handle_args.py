@@ -15,5 +15,4 @@ def handle_args():
         print("[*] Shutting down...")
         exit()
 
-
     return options  # returns "method": value & "target": value
