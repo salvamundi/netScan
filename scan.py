@@ -1,34 +1,17 @@
+import packet_crafter as pc
 import scapy.all as scapy
 import handle_args as ha
 
+
 def scan(method, target):
-    packet = None
-    if method == "ARP":
-        request = scapy.ARP(pdst = target)  # x.x.x.x
-        broadcast = scapy.Ether(dst = "ff:ff:ff:ff:ff:ff")  # send to broadcast in order to send packet to each client
-        packet = broadcast/request
-
-    elif method == "ICMP":
-        print("ICMP")
-        exit()
-
-    elif method == "TCP":
-        print("TCP")
-        exit()
-
-    elif method == "UDP":
-        print("UDP")
-        exit()
-
-    else:
-        print("[!] Given method not available")
-        print("[*] Shutting down...")
-        exit()
-
-    answered = scapy.srp(packet, timeout = 1, verbose = 0)[0]
+    packet = pc.craft(method, target)
+    answered = scapy.srp(packet, timeout = 1, verbose = 0)[0] # (<Results: TCP:0 UDP:0 ICMP:0 Other:1>, UN)
 
     hosts = []
     for element in answered:
+        # element = 0(<Ether  dst=ff:ff:ff:ff:ff:ff type=ARP |<ARP  pdst=x.x.x.x |>>,
+        # 1<Ether  dst=xx:xx:xx:xx:xx:xx src=xx:xx:xx:xx:xx:xx type=ARP |<ARP  hwtype=0x1 ptype=IPv4 hwlen=6 plen=4 op=is-at hwsrc=xx:xx:xx:xx:xx:xx psrc=x.x.x.x)
+
         p_src = element[1].psrc    # 192.168.0.102
         hw_src = element[1].hwsrc  # 00:11:22:33:44:55
 
